@@ -1,0 +1,37 @@
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+def kodiranje(a, shift, izbor):
+        sifriran_tekst = ""
+        desifriran_tekst = ""
+        if izbor == "d":
+            for i in range(len(a)):
+                if a[i] != " ":
+                    d = int(alphabet.index(a[i]) - shift)
+                    desifriran_tekst += alphabet[d]
+                elif a[i] == " ":
+                    desifriran_tekst += " "
+            print(desifriran_tekst)
+        elif izbor == "e":
+            for i in range(len(a)):
+                if a[i] != " ":
+                    c = int(alphabet.index(a[i]) + shift)
+                    sifriran_tekst += alphabet[c]
+                elif a[i] == " ":
+                    sifriran_tekst += " "
+            print(sifriran_tekst)
+        else:
+            print("Invalid choice")
+
+g = input("Do you want to continue with dec/enc? Type 'yes' or 'no': ")
+
+while g == "yes":
+    a = input("Type text (letters only): ")
+    izbor = input("Do you want to decode or encode? Type 'd' for decoding, 'e' for encoding: ")
+    shift = int(input("Insert shift (numbers only): "))
+    kodiranje(a, shift, izbor)
+    g = input("Do you want to continue with dec/enc? Type 'yes' or 'no': ")
+
+if g != "no" and g != "yes":
+    print("Invalid choice")
+
+print("The end")
