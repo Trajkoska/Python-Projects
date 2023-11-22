@@ -66,16 +66,30 @@ def main():
             json.dump(dat_, d_, indent=4)
         balance_label.configure(text=f"Balance: {fund}")
 
+
+
     def change_pas():
         global USERNAME
+        print("ok")
 
         with open("data.json", "r") as d_:
             dat_ = json.load(d_)
-
+            old_pas_data = dat_[USERNAME]["password"]
         def change():
-            
-
-        old_pas_data = dat_[USERNAME]["password"]
+            oldpas = old_pas.get()
+            newpas = new_pas.get()
+            repeat__ = repeat_pas.get()
+            if old_pas_data == oldpas:
+                if old_pas_data != newpas:
+                    if repeat__ == newpas:
+                        dat_[USERNAME]["password"] = newpas
+                        with open("data.json", "w") as d_:
+                            json.dump(dat_, d_, indent=4)
+                        CTkMessagebox(title="Error", message="The password was changed succesfully.", icon="check", option_1="OK")
+                    else:
+                        CTkMessagebox(title="Error", message="The passwords are not matching.", icon="cancel", option_1="OK")
+                else:
+                    CTkMessagebox(title="Error", message="The new password is the same as the old one.", icon="cancel", option_1="OK")
 
         pas_window = ctk.CTk()
         pas_window.geometry("230x200")
@@ -85,18 +99,16 @@ def main():
         old_pas = ctk.CTkEntry(pas_window, placeholder_text="Old password", width=300, corner_radius=10)
         old_pas.pack()
 
-        repeat_pas = ctk.CTkEntry(pas_window, placeholder_text="Repeat old password", width=300, corner_radius=10)
-        repeat_pas.pack()
-
         new_pas = ctk.CTkEntry(pas_window, placeholder_text="New password", width=300, corner_radius=10)
         new_pas.pack()
 
-        conf_button = ctk.CTkButton(pas_window, text="Confirm", fg_color="gray", corner_radius=10, command = change)
-        confirm_button.pack()
+        repeat_pas = ctk.CTkEntry(pas_window, placeholder_text="Repeat new password", width=300, corner_radius=10)
+        repeat_pas.pack()
 
+        conf_button = ctk.CTkButton(pas_window, text="Confirm", fg_color="gray", corner_radius=10, command=change)
+        conf_button.pack()
 
-
-
+        pas_window.mainloop()
 
     main_window = ctk.CTk()
     main_window.geometry("800x400")
@@ -138,7 +150,7 @@ def main():
     confirm_button = ctk.CTkButton(main_window, text="Confirm", fg_color="gray", corner_radius=10, compound="left", command=make_transaction)
     confirm_button.grid(row = 4, column = 2, pady = 5)
 
-    change_pas_button = ctk.CTkButton(main_window, text="Change your password", fg_color="gray", corner_radius=10, width = 200)
+    change_pas_button = ctk.CTkButton(main_window, text="Change your password", fg_color="gray", corner_radius=10, width = 200, command=change_pas)
     change_pas_button.grid(row = 5, column = 2, pady = (166,2), padx = (195, 2))
 
 
